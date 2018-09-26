@@ -78,73 +78,11 @@ def cart():
     cart = driver.find_elements_by_class_name('checkout')[0]
     cart.click()
 
-    name = check_exists_by_xpath("""//*[@id="order_billing_name"]""", driver)
-    sendKeys(paydetails['Name'], name, driver)
-
-    email = check_exists_by_xpath("""//*[@id="order_email"]""", driver)
-    sendKeys(paydetails['Email'], email, driver)
-
-    phone = check_exists_by_xpath("""//*[@id="order_tel"]""", driver)
-    sendKeys(paydetails['Phone'], phone, driver)
-
-    add1 = check_exists_by_xpath("""//*[@id="bo"]""", driver)
-    sendKeys(paydetails['Addr1'], add1, driver)
-
-    add2 = check_exists_by_xpath("""//*[@id="oba3"]""", driver)
-    sendKeys(paydetails['Addr2'], add2, driver)
-
-    if reg != 'ASIA':
-        country = Select(driver.find_element_by_name("order[billing_country]"))
-    if reg == 'EU':
-        selectValue(ceu[paydetails['Country']], country)
-    elif reg == 'US':
-        selectValue(paydetails['Country'], country)
-
-    if reg == 'EU':
-        add3 = check_exists_by_xpath("""//*[@id="order_billing_address_3"]""", driver)
-        sendKeys(paydetails['Addr3'], add3, driver)
-    elif reg == 'US':
-        state = Select(driver.find_element_by_name("order[billing_state]"))
-        selectValue(paydetails['Addr3'], state)
-
-    city = check_exists_by_xpath("""//*[@id="order_billing_city"]""", driver)
-    sendKeys(paydetails['City'], city, driver)
-
-    postcode = check_exists_by_xpath("""//*[@id="order_billing_zip"]""", driver)
-    sendKeys(paydetails['Post/zip code'], postcode, driver)
-
-    if reg == 'EU' or reg == 'ASIA':
-        cardType = Select(driver.find_element_by_id("credit_card_type"))
-        if reg == 'EU':
-            selectValue(peu[paydetails['CardType']], cardType)
-        else:
-            selectValue(pasia[paydetails['cardType']], cardType)
-
-    if paydetails['CardType'].lower() != 'paypal' or paydetails['CardType'] != '代金引換':
-        if reg == 'EU':
-            cardno = check_exists_by_xpath("""//*[@id="cnb"]""", driver)
-        elif reg == 'US':
-            cardno = check_exists_by_xpath("""//*[@id="nnaerb"]""", driver)
-        sendKeys(paydetails['Cardno'], cardno, driver)
-
-        if reg == 'EU':
-            cvv = check_exists_by_xpath("""//*[@id="vval"]""", driver)
-        elif reg == 'US':
-            cvv = check_exists_by_xpath("""//*[@id="orcer"]""", driver)
-        sendKeys(paydetails['CardCVV'], cvv, driver)
-
-        expiraryDate1 = Select(driver.find_element_by_name("credit_card[month]"))
-        selectValue(paydetails['CardMonth'], expiraryDate1)
-
-        expiraryDate2 = Select(driver.find_element_by_name("credit_card[year]"))
-        selectValue(paydetails['CardYear'], expiraryDate2)
-
     tickBox = driver.find_elements_by_class_name('iCheck-helper')
     tickBox[1].click()
 
     complete = driver.find_element_by_name('commit')
     complete.click()
-
 
 def searchItem(item):
     url = 'http://www.supremenewyork.com/shop/all/'
@@ -193,7 +131,7 @@ def searchItem(item):
     except Found:
         pass
 
-    clock.sleep(0.5+random())
+    clock.sleep(0.25+random())
 
     try:
         if item['selectedSize'] != 'First available' and item['selectedSize'] != '':
